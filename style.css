@@ -43,13 +43,6 @@
     border-bottom: 2px solid currentColor;
   }
   
-
-  .line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-  }
-
   #botninetyline, #botninetyline5, #botninetyline1 {
     fill: none;
     stroke: #E2B640;
@@ -73,18 +66,6 @@
     stroke: #82C5E6;
     stroke-width: 1.5px;
   }
-
-  /* .nav__examples {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: baseline;
-    -ms-flex-align: baseline;
-    align-items: baseline;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-  } */
    
   #intro {
     max-width: 50rem;
@@ -97,17 +78,11 @@
     margin: 2rem auto 0.5rem auto;
   }
   
-  /* .intro__dek { */
-    /* color: #8a8a8a; */
-  
-  /* } */
-  
   #intro {
     margin-bottom: 80px;
   }
   
   #outro {
-    /* height: 640px; */
     max-width: 40rem;
     margin: 1rem auto;
     text-align: center;
@@ -115,19 +90,11 @@
 
   }
   
-  @media (min-width: 840px) {
-    .nav__examples {
-      margin-top: 0;
-      margin-left: 2rem;
-    }
-  }
-  
 #scrolly {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    /* background-color: #f3f3f3; */
     padding: 1rem;
 }
 
@@ -148,10 +115,10 @@ figure {
     position: sticky;
     width: 100%;
     margin: 0;
+    top: 50%;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    /* background-color: #8a8a8a; */
     z-index: 0;
 }
 
@@ -171,28 +138,24 @@ figure p {
 
 .step {
     margin: auto;
-    /* background-color: #3b3b3b; */
     color: #3b3b3b;
     display: flex;
 
+}
 
+.is-active p {
+    background-color: #fcf7d1;
 }
 
 .step:last-child {
     margin-bottom: 1rem;
 }
 
-/* .step.is-active { */
-    /* background-color: goldenrod; */
-    /* color: #3b3b3b; */
-/* } */
-
 .step p {
-    text-align: center;
+    text-align: left;
     padding: 1rem;
-    font-size: 1.5rem;
-    align-self: flex-end;
-    /* font-size: 18px; */
+    font-size: 1.25rem;
+    align-self: center;
 
 }
 
@@ -200,8 +163,49 @@ figure p {
   visibility: hidden; 
   transition-timing-function: ease-in-out;
 }
+
 /* how to write show/hide function for changing opacity in transitions when scrolling up and down
 .hidden {
   opacity:0;
   transition:opacity 1000ms;
 } */
+
+
+/* resizing on smaller screens */
+@media only screen and (max-width: 850px) {
+    #scrolly {
+        display: block !important;
+    }
+
+    #scrolly > article {
+        margin: 0 auto;
+    }
+
+    #scrolly > div {
+        flex-basis: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+
+    #scrolly .scrolly-overlay {
+        margin-top: 30vh;
+        order: 0;
+        /* Change these to adjust sizing options */
+        min-width: 15rem;
+        max-width: 30rem;
+    }
+        
+    #scrolly .sticky-thing {
+            order: 0;
+            flex-grow: 2;
+            position: -webkit-sticky;
+            position: sticky;
+
+    }
+
+    figure {
+        top: 30% !important; 
+    }
+
+
+}

@@ -4,12 +4,16 @@ var figure = scrolly.select("figure");
 var article = scrolly.select("article");
 var step = article.selectAll(".step");
 
+// format dollar signs on axes
+var dollarFormat = function(d) { return '$' + d3.format(",.0f")(d) }
+
+
 // initialize the scrollama
 var scroller = scrollama();
 
 // generic window resize listener event
 function handleResize() {
-    // 1. update height of step elements
+     // 1. update height of step elements
     var stepH = Math.floor(window.innerHeight * 0.8);
     step.style("height", stepH + "px");
 
@@ -20,22 +24,27 @@ function handleResize() {
         .style("height", figureHeight + "px")
         .style("top", figureMarginTop + "px");
 
+
     // 3. tell scrollama to update new element dimensions
     scroller.resize();
+
+
 }
-    function show(selector) {
-        d3.selectAll(selector)
-            .transition()
-            .duration(200)
-            .attr("opacity", 1)
-    }
-    // this function hides the element passed to it by setting opacity to 0
-    function hide(selector) {
-        d3.selectAll(selector)
-            .transition()
-            .duration(200)
-            .attr("opacity", 0)
-    }
+
+// this function shows the element passed to it by setting opacity to 1
+// function show(selector) {
+//     d3.selectAll(selector)
+//         .transition()
+//         .duration(200)
+//         .attr("opacity", 1)
+// }
+// this function hides the element passed to it by setting opacity to 0
+// function hide(selector) {
+//     d3.selectAll(selector)
+//         .transition()
+//         .duration(200)
+//         .attr("opacity", 0)
+// }
 
 // scrollama event handlers
 function handleStepEnter(response) {
@@ -94,18 +103,16 @@ function handleStepEnter(response) {
 
 }
 
-// format dollar signs on axes
-var dollarFormat = function(d) { return '$' + d3.format(',.0f')(d) };
-
 
 // draw axes and the line for bottom ninety percent
 function drawbotChart() {
     const svg = d3.select("svg")
     
     svg
-        .attr("viewBox", "0 0 960 960")
-
-    var figureMarginTop = (window.innerHeight - (window.innerHeight*0.8))/ 2 ;
+        .attr("viewBox", "0 0 960 500")
+    
+    var figureHeight = window.innerHeight * 0.8;
+    var figureMarginTop = (window.innerHeight - figureHeight)/ 2 
 
     var max = d3.max(data, d => +d.botninety)
 
@@ -124,7 +131,7 @@ function drawbotChart() {
 
     const yScale = d3.scaleLinear()
         .domain([0, max])
-        .range([450, 50])
+        .range([figureHeight, figureMarginTop])
 
     const ninetylineGenerator = d3
         .line()
@@ -172,7 +179,7 @@ function drawbotChart() {
 
 function drawfiveChart() {
     const svg = d3.select("svg")
-    svg.attr("viewBox", "0 0 960 960")
+    svg.attr("viewBox", "0 0 960 500")
     
     var max = d3.max(data, d => +d.topfive)
 
@@ -187,7 +194,6 @@ function drawfiveChart() {
     const wageAxis = d3.axisLeft(yScale)
         .tickFormat(dollarFormat)
 
-
     const fivelineGenerator = d3
         .line()
         .x((d,i) => { return dateScale(d.year) })
@@ -197,7 +203,6 @@ function drawfiveChart() {
         .line()
         .x((d,i) => { return dateScale(d.year) })
         .y((d,i) => { return yScale(d.botninety) })
-
 
     svg
         .append("path")
@@ -231,7 +236,7 @@ function drawfiveChart() {
 
 function drawoneChart() {
     const svg = d3.select("svg")
-    svg.attr("viewBox", "0 0 960 960")
+    svg.attr("viewBox", "0 0 960 500")
 
     var max = d3.max(data, d => +d.topone)
 
@@ -245,6 +250,7 @@ function drawoneChart() {
 
     const wageAxis = d3.axisLeft(yScale)
         .tickFormat(dollarFormat)
+        .tickArguments([10])
 
     const ninetylineGenerator = d3
         .line()
